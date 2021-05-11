@@ -1,7 +1,6 @@
-// *********************************************************************
-// qed
-// *********************************************************************
-// light path
+/**********************************************************************************		 
+			light path simulation
+**********************************************************************************/
 namespace lp
 {
 	int T = 100;
@@ -23,7 +22,7 @@ namespace lp
 	vec2 mindepthphs;
 	std::map<int, vec2> depthmap;
 	bool bupdown = 1;
-	bool lightpath2(int ix, int iy, int depth = 0)
+	bool lightpath(int ix, int iy, int depth = 0)
 	{
 		if (iy == end.y)
 		{
@@ -56,37 +55,28 @@ namespace lp
 			return false;
 		}
 
-		//if (hismap4[ix][iy] == pathcnt)
-		//	return false;
-		//hismap4[ix][iy] = pathcnt;
-
 		{
-			//byte dirs[4] = { 0,1,2,3 };
-			//mixorder(dirs);
-
-			//for (int i = 0; i < 4; i++)
+			int dir = rand() % 5;
+			bool ret = 0;
+			switch (dir)
 			{
-				int dir = rand() % 5;
-				bool ret = 0;
-				switch (dir)
-				{
-				case 0:
-					ret = lightpath2(bupdown == 1 ? ix + 1 : ix - 1, iy, depth + 1);
-					break;
-				default:
-					ret = lightpath2(ix, iy + 1, depth + 1);
-					break;
-				}
-
-				if (ret)
-				{
-					pixel(ix, iy, lp::pathcnt % 2 == 0 ? 0xFFFFFFFF : 0xFF0000FF);
-				}
-				return ret;
+			case 0:
+				ret = lightpath(bupdown == 1 ? ix + 1 : ix - 1, iy, depth + 1);
+				break;
+			default:
+				ret = lightpath(ix, iy + 1, depth + 1);
+				break;
 			}
+
+			if (ret)
+			{
+				pixel(ix, iy, lp::pathcnt % 2 == 0 ? 0xFFFFFFFF : 0xFF0000FF);
+			}
+			return ret;
 		}
-		//return false;
 	}
+	// ---------------------------------------------------------------------
+	// 反射路径模拟
 	// ---------------------------------------------------------------------
 	const int MAX_STEP = 10000;
 	const int STEPS = 1000;
