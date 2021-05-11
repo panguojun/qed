@@ -28,15 +28,7 @@ namespace QEDLP
 		{
 			vec2 phs = getpathphase(depth);
 			sumphs = sumphs + phs;
-			/*phamap[ix][iy][0] += phs.x;
-			phamap[ix][iy][1] += phs.y;*/
-
-			//PRINT("depth=" << depth);
-			/*if (depth < mindepth)
-			{
-				mindepth = depth;
-				mindepthphs = phs;
-			}*/
+			
 			if (depthmap.find(depth) == depthmap.end())
 				depthmap[depth] = phs;
 			depthmap[depth] += phs;
